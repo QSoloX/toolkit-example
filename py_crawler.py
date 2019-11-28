@@ -13,7 +13,7 @@ class PyCrawler:
         self.results = []
         self.urls_to_scrap = []
 
-    def web_scrap_crawl(self):
+    def web_scrap_crawl(self, checkinput=False):
         # results = []
         # urls_to_scrap = self.results
         run = True
@@ -40,8 +40,8 @@ class PyCrawler:
         # print(f"{bcolors.OKGREEN}{len(set(self.results))} found!{bcolors.ENDC}")
         # print(f"{bcolors.OKGREEN}{len(self.results)} found!{bcolors.ENDC}")
 
-    def word_list_crawl(self):
-        with open('url_list.aawt', 'r') as f:
+    def word_list_crawl(self, list):
+        with open(list, 'r') as f:
             url_array = []
             for line in f:
                 url_array.append(line.strip("\n"))
