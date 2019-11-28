@@ -23,9 +23,9 @@ def main():
             crawler.web_scrap_crawl()
             if args.output:
                 os.makedirs(os.path.dirname("output/"), exist_ok=True)
-                with open("output/" + args.output, 'w+') as f:
+                with open("output/" + args.output, 'w+', encoding="utf-8") as f:
                     for i in crawler.results:
-                        f.write(i + "\n")
+                        f.write(str(i) + "\n")
 
 
 if __name__ == "__main__":
