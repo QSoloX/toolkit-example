@@ -36,9 +36,9 @@ class PyCrawler:
             else:
                 run = False
 
-        # print(f"{bcolors.OKGREEN}{self.results}{bcolors.ENDC}")
-        print(f"{bcolors.OKGREEN}{len(set(self.results))} found!{bcolors.ENDC}")
-        print(f"{bcolors.OKGREEN}{len(self.results)} found!{bcolors.ENDC}")
+        # Shows if the list has any duplicates
+        # print(f"{bcolors.OKGREEN}{len(set(self.results))} found!{bcolors.ENDC}")
+        # print(f"{bcolors.OKGREEN}{len(self.results)} found!{bcolors.ENDC}")
 
     def word_list_crawl(self):
         with open('url_list.aawt', 'r') as f:

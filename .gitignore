@@ -9,10 +9,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 .pyc
-
+.vscode
 # C extensions
 *.so
-
+output
 # Distribution / packaging
 .Python
 build/
