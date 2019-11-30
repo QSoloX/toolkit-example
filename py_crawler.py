@@ -68,7 +68,7 @@ class PyCrawler:
                     print(self.url + self.urls_to_scrap[0])
                     r = requests.get(self.url + self.urls_to_scrap[0])
                     print(r.status_code)
-                    self.urls_to_scrap.remove(self.urls_to_scrap[0])
+                    self.urls_to_scrap.remove5(self.urls_to_scrap[0])
                     soup = BeautifulSoup(r.text, 'html.parser')
                     tags = soup.find_all('a')
                 else:
