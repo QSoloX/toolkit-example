@@ -11,6 +11,7 @@ class PyCrawler:
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36"}
         self.url = url
         self.results = []
+        self.input = []
         self.urls_to_scrap = []
 
     def web_scrap_crawl(self, checkinput=False):
@@ -18,23 +19,60 @@ class PyCrawler:
         # urls_to_scrap = self.results
         run = True
         r = requests.get(self.url)
-        soup = BeautifulSoup(r.text, 'html.parser')
-        tags = soup.find_all('a')
-        while run:
-            for tag in tags:
-                if not tag.get('href') in self.results and tag.get('href') != "/" and tag.get('href') != "#" and tag.get('href') != "none" and tag.get('href') != None:
-                    self.results.append(tag.get('href'))
-                    self.urls_to_scrap.append(tag.get('href'))
-
+        if checkinput:
+            soup = BeautifulSoup(r.text, 'html.parser')
+            a_tags = soup.find_all('a')
+            input_tags = soup.find_all('form')
+            while run:
+                for tag in a_tags:
+                    if tag.get('href'):
+                        # print(tag.get('href'))
+                        if not tag.get('href') in self.results and tag.get('href') != "/" and tag.get('href') != "#" and tag.get('href') != "none" and tag.get('href') != None:
+                            if input_tags:
+                                self.results.append(
+                                    tag.get('href'))
+                                self.urls_to_scrap.append(tag.get('href'))
+                                print(
+                                    f"{bcolors.OKGREEN}=> {tag.get('href')} <= found!{bcolors.ENDC}")
+                        # else:
+                        #     self.results.append(
+                        #         tag.get('href'))
+                        #     self.urls_to_scrap.append(tag.get('href'))
+                        #     print(
+                        #         f"{bcolors.OKGREEN}=> {tag.get('href')} <= found!{bcolors.ENDC}")
+                if input_tags:
+                    self.input.append(self.url+self.urls_to_scrap[0])
                     print(
-                        f"{bcolors.OKGREEN}=> {tag.get('href')} <= found!{bcolors.ENDC}")
-            if self.urls_to_scrap and "https" not in self.urls_to_scrap[0] and "www." not in self.urls_to_scrap[0]:
-                r = requests.get(self.url + str(self.urls_to_scrap[0]))
-                self.urls_to_scrap.remove(self.urls_to_scrap[0])
-                soup = BeautifulSoup(r.text, 'html.parser')
-                tags = soup.find_all('a')
-            else:
-                run = False
+                        f"{bcolors.FAIL}=> {self.url} has a input tag <= input tag!{bcolors.ENDC}")
+                if self.urls_to_scrap and "https" not in self.urls_to_scrap[0] and "www." not in self.urls_to_scrap[0]:
+                    print(self.url + self.urls_to_scrap[0])
+                    r = requests.get(self.url + self.urls_to_scrap[0])
+                    self.urls_to_scrap.remove(self.urls_to_scrap[0])
+                    soup = BeautifulSoup(r.text, 'html.parser')
+                    a_tags = soup.find_all('a')
+                    input_tags = soup.find_all('form')
+                else:
+                    run = False
+        else:
+            soup = BeautifulSoup(r.text, 'html.parser')
+            tags = soup.find_all('a')
+            while run:
+                for tag in tags:
+                    if not tag.get('href') in self.results and tag.get('href') != "/" and tag.get('href') != "#" and tag.get('href') != "None" and tag.get('href') != None:
+                        self.results.append(tag.get('href'))
+                        self.urls_to_scrap.append(tag.get('href'))
+
+                        print(
+                            f"{bcolors.OKGREEN}=> {tag.get('href')} <= found!{bcolors.ENDC}")
+                if self.urls_to_scrap and "www." not in self.urls_to_scrap[0]:
+                    print(self.url + self.urls_to_scrap[0])
+                    r = requests.get(self.url + self.urls_to_scrap[0])
+                    print(r.status_code)
+                    self.urls_to_scrap.remove(self.urls_to_scrap[0])
+                    soup = BeautifulSoup(r.text, 'html.parser')
+                    tags = soup.find_all('a')
+                else:
+                    run = False
 
         # Shows if the list has any duplicates
         # print(f"{bcolors.OKGREEN}{len(set(self.results))} found!{bcolors.ENDC}")
