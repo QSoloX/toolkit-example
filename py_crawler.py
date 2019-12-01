@@ -14,6 +14,7 @@ class PyCrawler:
         self.results = []
         self.input = []
         self.urls_to_scrap = []
+        self.input_found = []
 
     def web_scrap_crawl(self, checkinput=False):
         # results = []
@@ -45,12 +46,23 @@ class PyCrawler:
 
                     if self.urls_to_scrap:
                         if input_tags:
-                            self.input.append(self.url + self.urls_to_scrap[0])
-                            print(
-                                f"{bcolors.FAIL}=> {self.url} has a input tag <= input tag!{bcolors.ENDC}")
-                        if "https" not in self.urls_to_scrap[0] and "www." not in self.urls_to_scrap[0]:
-                            r = requests.get(self.url + self.urls_to_scrap[0])
-
+                            for form in input_tags:
+                                if not form in self.input_found:
+                                    self.input_found.append(form)
+                                    print(form.get('id'))
+                                    self.input.append(
+                                        self.url + self.urls_to_scrap[0])
+                                    print(
+                                        f"{bcolors.FAIL}=> {self.url + self.urls_to_scrap[0]} has a input tag <= input tag!{bcolors.ENDC}")
+                        if "https" not in self.urls_to_scrap[0] and "www." not in self.urls_to_scrap[0] and self.urls_to_scrap[0] != "":
+                            if self.urls_to_scrap[0][0] != "/":
+                                self.urls_to_scrap[0] = "/" + \
+                                    self.urls_to_scrap[0]
+                            try:
+                                r = requests.get(
+                                    self.url + self.urls_to_scrap[0])
+                            except requests.RequestException as e:
+                                print(e)
                             soup = BeautifulSoup(r.text, 'html.parser')
                             a_tags = soup.find_all('a')
                             input_tags = soup.find_all('form')
@@ -72,8 +84,15 @@ class PyCrawler:
                             print(
                                 f"{bcolors.OKGREEN}=> {tag.get('href')} <= found!{bcolors.ENDC}")
                     if self.urls_to_scrap:
-                        if "https" not in self.urls_to_scrap[0] and "www." not in self.urls_to_scrap[0]:
-                            r = requests.get(self.url + self.urls_to_scrap[0])
+                        if "https" not in self.urls_to_scrap[0] and "www." not in self.urls_to_scrap[0] and self.urls_to_scrap[0] != "":
+                            if self.urls_to_scrap[0][0] != "/":
+                                self.urls_to_scrap[0] = "/" + \
+                                    self.urls_to_scrap[0]
+                            try:
+                                r = requests.get(
+                                    self.url + self.urls_to_scrap[0])
+                            except requests.RequestException as e:
+                                print(e)
                             soup = BeautifulSoup(r.text, 'html.parser')
                             tags = soup.find_all('a')
                         self.urls_to_scrap.remove(self.urls_to_scrap[0])
