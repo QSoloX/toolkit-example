@@ -5,13 +5,19 @@ from py_crawler import PyCrawler
 import os
 
 
-def write_to_file(crawler, filename):
+def write_to_file(crawler, filename, input_tag=False):
     os.makedirs(os.path.dirname("output/"), exist_ok=True)
     with open("output/" + args.output, 'w+', encoding="utf-8") as f:
         for i in crawler.results:
             f.write(str(i) + "\n")
         print(
             f"{bcolors.OKBLUE} Urls written to output/{args.output} {bcolors.ENDC}")
+    if input_tag:
+        with open("output/input-" + args.output, 'w+', encoding="utf-8") as f:
+            for i in crawler.input:
+                f.write(str(i) + "\n")
+            print(
+                f"{bcolors.OKBLUE} Urls with input written to output/input-{args.output} {bcolors.ENDC}")
 
 
 def main():
@@ -36,9 +42,12 @@ def main():
                 write_to_file(crawler, args.output)
         elif args.crawl == 3:
             crawler.word_list_crawl(args.list)
-            crawler.web_scrap_crawl()
+            crawler.web_scrap_crawl(True)
             if args.output:
-                write_to_file(crawler, args.output)
+                if crawler.input:
+                    write_to_file(crawler, args.output, True)
+                else:
+                    write_to_file(crawler, args.output)
 
 
 if __name__ == "__main__":
