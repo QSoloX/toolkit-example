@@ -42,13 +42,13 @@ class PyCrawler:
                             #     self.urls_to_scrap.append(tag.get('href'))
                             #     print(
                             #         f"{bcolors.OKGREEN}=> {tag.get('href')} <= found!{bcolors.ENDC}")
-                    if input_tags:
-                        self.input.append(self.url+self.urls_to_scrap[0])
-                        print(
-                            f"{bcolors.FAIL}=> {self.url} has a input tag <= input tag!{bcolors.ENDC}")
+
                     if self.urls_to_scrap:
+                        if input_tags:
+                            self.input.append(self.url + self.urls_to_scrap[0])
+                            print(
+                                f"{bcolors.FAIL}=> {self.url} has a input tag <= input tag!{bcolors.ENDC}")
                         if "https" not in self.urls_to_scrap[0] and "www." not in self.urls_to_scrap[0]:
-                            print(self.url + self.urls_to_scrap[0])
                             r = requests.get(self.url + self.urls_to_scrap[0])
 
                             soup = BeautifulSoup(r.text, 'html.parser')
@@ -71,11 +71,9 @@ class PyCrawler:
 
                             print(
                                 f"{bcolors.OKGREEN}=> {tag.get('href')} <= found!{bcolors.ENDC}")
-                    print(self.url + self.urls_to_scrap[0])
                     if self.urls_to_scrap:
                         if "https" not in self.urls_to_scrap[0] and "www." not in self.urls_to_scrap[0]:
                             r = requests.get(self.url + self.urls_to_scrap[0])
-                            print(r.status_code)
                             soup = BeautifulSoup(r.text, 'html.parser')
                             tags = soup.find_all('a')
                         self.urls_to_scrap.remove(self.urls_to_scrap[0])
