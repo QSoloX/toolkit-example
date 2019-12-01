@@ -49,7 +49,6 @@ class PyCrawler:
                             for form in input_tags:
                                 if not form in self.input_found:
                                     self.input_found.append(form)
-                                    print(form.get('id'))
                                     self.input.append(
                                         self.url + self.urls_to_scrap[0])
                                     print(
@@ -63,9 +62,12 @@ class PyCrawler:
                                     self.url + self.urls_to_scrap[0])
                             except requests.RequestException as e:
                                 print(e)
-                            soup = BeautifulSoup(r.text, 'html.parser')
-                            a_tags = soup.find_all('a')
-                            input_tags = soup.find_all('form')
+                            try:
+                                soup = BeautifulSoup(r.text, 'html.parser')
+                                a_tags = soup.find_all('a')
+                                input_tags = soup.find_all('form')
+                            except Exception as e:
+                                print(e)
                         self.urls_to_scrap.remove(self.urls_to_scrap[0])
                     else:
                         run = False
