@@ -82,7 +82,6 @@ class PyCrawler:
                         if not tag.get('href') in self.results and tag.get('href') != "/" and tag.get('href') != "#" and tag.get('href') != "None" and tag.get('href') != None:
                             self.results.append(tag.get('href'))
                             self.urls_to_scrap.append(tag.get('href'))
-
                             print(
                                 f"{bcolors.OKGREEN}=> {tag.get('href')} <= found!{bcolors.ENDC}")
                     if self.urls_to_scrap:
@@ -93,12 +92,15 @@ class PyCrawler:
                             try:
                                 r = requests.get(
                                     self.url + self.urls_to_scrap[0])
-                            except requests.RequestException as e:
+                                soup = BeautifulSoup(r.text, 'html.parser')
+                                tags = soup.find_all('a')
+                            except Exception as e:
+                                print(r.text)
                                 print(e)
-                            soup = BeautifulSoup(r.text, 'html.parser')
-                            tags = soup.find_all('a')
+
                         self.urls_to_scrap.remove(self.urls_to_scrap[0])
                     else:
+                        print(self.urls_to_scrap)
                         run = False
             except KeyboardInterrupt:
                 run = False
