@@ -3,11 +3,12 @@ from bs4 import BeautifulSoup
 from colorama import Fore
 
 # Define options for use in the shell
-options = {"url": ["", True]}
+input_scrape_crawler_options = {"url": ["", True]}
 
 
 # Define custom payload
-def payload(url):
+def input_scrape_crawler(arguments):
+    url = arguments
     # Define Variables
     run = True
     results = []
