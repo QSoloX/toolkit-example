@@ -24,7 +24,7 @@ $ pipenv install
 
 # This is a shell based program running the main file will drop you into a shell
 $ pipenv shell
-(AAWT) $ python aawt.py
+$ python aawt.py
 AWWT > load foobar_payload
 AWWT foobar_payload > options
 foobar_option value
