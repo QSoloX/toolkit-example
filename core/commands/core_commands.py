@@ -13,11 +13,9 @@ def command_load(shell, user_input):
         shell.current_payload = user_input[1]
         module = __import__(f"payloads.{user_input[1]}")
         options = getattr(module, "options")
-        payload_init = getattr(module, "payload_init")
-        # payload_attack = getattr(module, "payload_attack")
+        payload = getattr(module, "payload")
         shell.payload_options = options
-        shell.payload_init = payload_init
-        # shell.payload_attack = payload_attack
+        shell.payload = payload
 
 
 @register("options", "used to display payload options")
@@ -28,13 +26,12 @@ def command_options(shell, user_input):
 
 @register("set", "Used to set payload options")
 def command_set(shell, user_input):
-    shell.payload_options[user_input[1]] = user_input[2]
+    shell.payload_options[user_input[1]][0] = user_input[2]
 
 
 @register("shoot", "Used to launch the payload")
 def command_shoot(shell, user_in):
-    thing = shell.payload_init(shell.payload_options['url'])
-    thing.attack(shell.payload_options['check_input'])
+    shell.payload(shell.payload_options["url"][0])
 
 
 @register("payloads", "shows all of the payloads currently in payloads/")

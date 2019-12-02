@@ -9,8 +9,7 @@ class Shell:
         # shell variables
         self.current_payload = ""
         self.payload_options = {}
-        self.payload_init = None
-        self.payload_attack = None
+        self.payload = None
         self.shell_running = True
 
     def run(self):
