@@ -4,14 +4,45 @@ A Basic Web Crawler, Xss Injector, Sql Injector, Username lookup toolkit.
 
 ## Installation
 
-Currently just use git clone https://github.com/QSoloX/AAWT.git to install.
+**NOTE**: Python 3.7 or higher is required.
+
+```bash
+# Clone the repo
+$ git clone https://github.com/QSoloX/AAWT.git
+
+# Cd into AAWT
+
+# Install python 3.7, pip and pipenv if not already installed
+
+# Install the enviroment
+$ pipenv install
+```
 
 ## Usage
 
-### Arguments
+```bash
 
-- --url https://example.com # put your target url with https://www. and no ending slash.
-- -crawl int # the level of crawling you want to do, higher the number more intese the crawl 1-3 currently supported.
-- --output filename # puts the output into output/filename
- 
- example: Python main.py --url https://www.foobar.com --crawl 2 --output foobar
+# This is a shell based program running the main file will drop you into a shell
+$ python aawt.py
+AWWT > load foobar_payload
+AWWT foobar_payload > options
+foobar_option value
+AWWT foobar_payload > set foobar value
+AWWT foobar_payload > shoot
+
+Arguments:
+    payloads                    displays all payloads currently inside payloads/
+    load payload_name           loads the payload you want to use.
+    options                     shows the options of the payload.
+    set option_name value       sets the option to that value
+    shoot                       runs the payload that you have selected.
+
+
+
+
+```
+
+## License
+
+MIT © <br/>
+Original Creator - [QSoloX](https://github.com/QSoloX)
