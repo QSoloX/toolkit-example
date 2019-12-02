@@ -23,7 +23,8 @@ $ pipenv install
 ```bash
 
 # This is a shell based program running the main file will drop you into a shell
-$ python aawt.py
+$ pipenv shell
+(AAWT) $ python aawt.py
 AWWT > load foobar_payload
 AWWT foobar_payload > options
 foobar_option value
