@@ -35,7 +35,7 @@ def main():
     current_payload = ""
 
     # Clear terminal
-    if platform == "Linux":
+    if platform.system() == "Linux":
         os.system('clear')
     else:
         os.system('cls')
