@@ -3,8 +3,11 @@ from bs4 import BeautifulSoup
 
 import requests
 
+# Options used to laod into shell
+options = {"url": "Host Url", "check_input": False}
 
-# print results in a grid results
+# Used as the payload to launch
+
 
 class PyCrawler:
     def __init__(self, url):
@@ -16,7 +19,7 @@ class PyCrawler:
         self.urls_to_scrap = []
         self.input_found = []
 
-    def web_scrap_crawl(self, checkinput=False):
+    def attack(self, checkinput=False):
         # results = []
         # urls_to_scrap = self.results
         run = True
@@ -95,7 +98,6 @@ class PyCrawler:
                                 soup = BeautifulSoup(r.text, 'html.parser')
                                 tags = soup.find_all('a')
                             except Exception as e:
-                                print(r.text)
                                 print(e)
 
                         self.urls_to_scrap.remove(self.urls_to_scrap[0])
@@ -123,3 +125,7 @@ class PyCrawler:
                 if not '/'+i in self.results:
                     self.results.append("/" + i)
                     self.urls_to_scrap.append("/" + i)
+
+
+payload_init = PyCrawler
+# payload_attack = web_scrap_crawl

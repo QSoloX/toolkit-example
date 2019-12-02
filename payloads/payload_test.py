@@ -1,0 +1,1 @@
+options = {"rhosts": 1}
