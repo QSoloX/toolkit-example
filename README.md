@@ -10,7 +10,7 @@ A Basic Web Crawler, Xss Injector, Sql Injector, Username lookup toolkit.
 # Clone the repo
 $ git clone https://github.com/QSoloX/AAWT.git
 
-# Cd into AAWT
+$ cd AAWT
 
 # Install python 3.7, pip and pipenv if not already installed
 
