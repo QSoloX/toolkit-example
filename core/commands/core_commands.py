@@ -3,12 +3,12 @@ import os
 from colorama import Fore
 
 
-@register("exit", "Used to exit the shell.")
+@register("exit", "Used to exit the shell.", "Usage: exit")
 def command_exit(shell, input):
     shell.shell_running = False
 
 
-@register("load", "Used to load payload.")
+@register("load", "Used to load payload.", "Usage: load payloadname")
 def command_load(shell, user_input):
     if user_input[1] + ".py" in os.listdir("payloads"):
         shell.current_payload = user_input[1]
@@ -22,7 +22,7 @@ def command_load(shell, user_input):
         print(f"{user_input[1]} not a valid payload.")
 
 
-@register("options", "used to display payload options")
+@register("options", "used to display payload options", "Usage: options")
 def command_options(shell, user_input):
     for keys, values in shell.payload_options.items():
         if len(values) > 1:
@@ -32,12 +32,12 @@ def command_options(shell, user_input):
             print(f"{Fore.BLUE}{keys} {Fore.GREEN}{str(values)}")
 
 
-@register("set", "Used to set payload options")
+@register("set", "Used to set payload options", "Usage: set optionname value")
 def command_set(shell, user_input):
     shell.payload_options[user_input[1]][0] = user_input[2]
 
 
-@register("shoot", "Used to launch the payload")
+@register("shoot", "Used to launch the payload", "Usage: shoot")
 def command_shoot(shell, user_in):
     arguments = []
     for keys, values in shell.payload_options.items():
@@ -54,7 +54,7 @@ def command_shoot(shell, user_in):
     shell.payload(arguments)
 
 
-@register("payloads", "shows all of the payloads currently in payloads/")
+@register("payloads", "shows all of the payloads currently in the payloads directory.", "Usage: payloads")
 def command_payloads(shell, user_in):
     payload_list = os.listdir("payloads")
     payload_list.remove("__init__.py")
@@ -67,3 +67,10 @@ def command_payloads(shell, user_in):
 
         print(
             f"{Fore.BLUE}Payload: [{test}] {Fore.GREEN}Information: {help_text}")
+
+
+@register("help", "help command.", "Usage: help commandname")
+def command_help(shell, user_in):
+    if len(user_in) > 1:
+        print(
+            f"{Fore.BLUE}{commands[user_in[1]].helpmsg} {Fore.GREEN}[{commands[user_in[1]].usage}]")
