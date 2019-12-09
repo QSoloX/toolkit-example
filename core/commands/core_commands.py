@@ -85,3 +85,17 @@ def command_commands(shell, user_in):
     for key, values in commands.items():
         print(
             f"{Fore.BLUE}Command: ({key}) {Fore.GREEN}{commands[key].helpmsg}")
+
+
+@register("write", "Writes output to a file.", "Usage: write filename")
+def command_write(shell, user_in):
+    if len(user_in) > 1:
+        os.makedirs(os.path.dirname("output/"), exist_ok=True)
+        module = __import__(f"payloads.{shell.current_payload}")
+        results = getattr(module, shell.current_payload+"_results")
+        with open("output/"+user_in[1]+".txt", 'w+', encoding="utf-8") as f:
+            for i in results:
+                f.write(str(i) + "\n")
+        print(f"{Fore.BLUE} Urls Written too {Fore.GREEN} output/{user_in[1]}")
+    else:
+        print(f"{Fore.YELLOW}Incorrect Usage, please refeer to the help command.")

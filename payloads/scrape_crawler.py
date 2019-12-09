@@ -6,6 +6,7 @@ from colorama import Fore
 # Define options for use in the shell
 scrape_crawler_options = {"url": ["", "Required"]}
 scrape_crawler_help_text = "A simple web crawler based payload."
+scrape_crawler_results = []
 
 
 # Define custom payload
@@ -15,7 +16,7 @@ def scrape_crawler(arguments):
     url = arguments
     # Define Variables
     run = True
-    results = []
+
     urls_to_scrape = []
     # Make first request
     r = requests.get(url)
@@ -24,8 +25,8 @@ def scrape_crawler(arguments):
     try:
         while run:
             for tag in tags:
-                if not tag.get('href') in results and tag.get('href') != "/" and tag.get('href') != "#" and tag.get('href') != "None" and tag.get('href') != None:
-                    results.append(tag.get('href'))
+                if not tag.get('href') in scrape_crawler_results and tag.get('href') != "/" and tag.get('href') != "#" and tag.get('href') != "None" and tag.get('href') != None:
+                    scrape_crawler_results.append(tag.get('href'))
                     urls_to_scrape.append(tag.get('href'))
                     print(
                         f"{Fore.GREEN}=> {tag.get('href')} <= found!")
@@ -46,5 +47,6 @@ def scrape_crawler(arguments):
             else:
                 print(urls_to_scrape)
                 run = False
+
     except KeyboardInterrupt:
         run = False
