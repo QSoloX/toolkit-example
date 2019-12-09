@@ -25,7 +25,7 @@ def command_load(shell, user_input):
 @register("options", "used to display payload options.", "Usage: options")
 def command_options(shell, user_input):
     for keys, values in shell.payload_options.items():
-        if len(values) > 1:
+        if type(values) == list:
             print(
                 f"{Fore.BLUE}{keys} {Fore.GREEN}{str(values[0])} {Fore.RED} [{values[1]}]")
         else:

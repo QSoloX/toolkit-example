@@ -23,6 +23,6 @@ def word_list_crawl(arguments):
                          headers=headers)
         if r.status_code == 200:
             print(f"{Fore.MAGENTA}/{i} found!")
-            if not '/'+i in results:
+            if not '/'+i in word_list_crawl_results:
                 word_list_crawl_results.append("/" + i)
                 urls_to_scrape.append("/" + i)
