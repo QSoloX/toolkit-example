@@ -5,11 +5,11 @@ import requests
 
 word_list_crawl_options = {"url": ["", "Required"], "list": "url_list.aawt"}
 word_list_crawl_help_text = "A web crawler based of off a wordlist."
+word_list_crawl_results = []
 
 
 def word_list_crawl(arguments):
     url, url_list = arguments
-    results = []
     urls_to_scrape = []
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36"}
@@ -24,5 +24,5 @@ def word_list_crawl(arguments):
         if r.status_code == 200:
             print(f"{Fore.MAGENTA}/{i} found!")
             if not '/'+i in results:
-                results.append("/" + i)
+                word_list_crawl_results.append("/" + i)
                 urls_to_scrape.append("/" + i)
