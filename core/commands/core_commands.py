@@ -75,8 +75,9 @@ def command_payloads(shell, user_in):
 @register("help", "help command.", "Usage: help commandname")
 def command_help(shell, user_in):
     if len(user_in) > 1:
-        print(
-            f"{Fore.BLUE}{commands[user_in[1]].helpmsg} {Fore.GREEN}[{commands[user_in[1]].usage}]")
+        if user_in[1] in commands:
+            print(
+                f"{Fore.BLUE}{commands[user_in[1]].helpmsg} {Fore.GREEN}[{commands[user_in[1]].usage}]")
 
 
 @register("commands", "Shows all shell commands.", "Usage: commands")
