@@ -16,7 +16,7 @@ class Shell:
         while self.shell_running:
             try:
                 print(
-                    f"{Fore.CYAN}AAWT {self.current_payload}>{Fore.RED}", end=" ")
+                    f"{Fore.CYAN}AAWT {Fore.MAGENTA}{self.current_payload}{Fore.CYAN} >{Fore.RED}", end=" ")
                 user_in = input(f" ").split(" ")
 
                 if user_in[0] in commands:
@@ -24,7 +24,3 @@ class Shell:
 
             except KeyboardInterrupt:
                 self.shell_running = False
-
-    def execute_command(self, user_in):
-        if user_in:
-            print(user_in)

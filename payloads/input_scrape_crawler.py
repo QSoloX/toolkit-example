@@ -1,9 +1,11 @@
+# Help Text
 import requests
 from bs4 import BeautifulSoup
 from colorama import Fore
 
 # Define options for use in the shell
-input_scrape_crawler_options = {"url": ["", True]}
+input_scrape_crawler_options = {"url": ["", "Required"]}
+input_scrape_crawler_help_text = "A webcrawler that finds input forms."
 
 
 # Define custom payload

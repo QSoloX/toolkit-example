@@ -1,9 +1,11 @@
+# Help Text
 import requests
 from bs4 import BeautifulSoup
 from colorama import Fore
 
 # Define options for use in the shell
-scrape_crawler_options = {"url": ["", True]}
+scrape_crawler_options = {"url": ["", "Required"]}
+scrape_crawler_help_text = "A simple web crawler based payload."
 
 
 # Define custom payload

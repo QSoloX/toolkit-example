@@ -1,8 +1,9 @@
 from core.command_core import commands, register
 import os
+from colorama import Fore
 
 
-@register("exit()", "Used to exit the shell.")
+@register("exit", "Used to exit the shell.")
 def command_exit(shell, input):
     shell.shell_running = False
 
@@ -16,6 +17,7 @@ def command_load(shell, user_input):
         payload = getattr(module, user_input[1])
         shell.payload_options = options
         shell.payload = payload
+        print(f"{Fore.BLUE}Payload: [{user_input[1]}] loaded.")
     else:
         print(f"{user_input[1]} not a valid payload.")
 
@@ -23,7 +25,11 @@ def command_load(shell, user_input):
 @register("options", "used to display payload options")
 def command_options(shell, user_input):
     for keys, values in shell.payload_options.items():
-        print(keys + " " + str(values))
+        if len(values) > 1:
+            print(
+                f"{Fore.BLUE}{keys} {Fore.GREEN}{str(values[0])} {Fore.RED} [{values[1]}]")
+        else:
+            print(f"{Fore.BLUE}{keys} {Fore.GREEN}{str(values)}")
 
 
 @register("set", "Used to set payload options")
@@ -50,4 +56,14 @@ def command_shoot(shell, user_in):
 
 @register("payloads", "shows all of the payloads currently in payloads/")
 def command_payloads(shell, user_in):
-    print(os.listdir("payloads"))
+    payload_list = os.listdir("payloads")
+    payload_list.remove("__init__.py")
+    payload_list.remove("__pycache__")
+    payload_list.remove("word_lists")
+    for i in payload_list:
+        test = i.replace(".py", "")
+        module = __import__(f"payloads.{test}")
+        help_text = getattr(module, test+"_help_text")
+
+        print(
+            f"{Fore.BLUE}Payload: [{test}] {Fore.GREEN}Information: {help_text}")

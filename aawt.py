@@ -9,20 +9,6 @@ import platform
 init()
 
 
-# def write_to_file(crawler, filename, input_tag=False):
-#     os.makedirs(os.path.dirname("output/"), exist_ok=True)
-#     with open("output/" + args.output, 'w+', encoding="utf-8") as f:
-#         for i in crawler.results:
-#             f.write(str(i) + "\n")
-#         print(
-#             f"{bcolors.OKBLUE} Urls written to output/{args.output} {bcolors.ENDC}")
-#     if input_tag:
-#         with open("output/input-" + args.output, 'w+', encoding="utf-8") as f:
-#             for i in crawler.input:
-#                 f.write(str(i) + "\n")
-#             print(
-#                 f"{bcolors.OKBLUE} Urls with input written to output/input-{args.output} {bcolors.ENDC}")
-
 def user_input_checker(user_in, shell_running):
     if user_in:
         # check dict?

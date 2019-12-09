@@ -1,8 +1,10 @@
+# Help Text
 from colorama import Fore
 import requests
 
 
-word_list_crawl_options = {"url": ["", True], "list": "url_list.aawt"}
+word_list_crawl_options = {"url": ["", "Required"], "list": "url_list.aawt"}
+word_list_crawl_help_text = "A web crawler based of off a wordlist."
 
 
 def word_list_crawl(arguments):
