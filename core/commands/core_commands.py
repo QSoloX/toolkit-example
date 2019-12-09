@@ -22,7 +22,7 @@ def command_load(shell, user_input):
         print(f"{user_input[1]} not a valid payload.")
 
 
-@register("options", "used to display payload options", "Usage: options")
+@register("options", "used to display payload options.", "Usage: options")
 def command_options(shell, user_input):
     for keys, values in shell.payload_options.items():
         if len(values) > 1:
@@ -32,12 +32,15 @@ def command_options(shell, user_input):
             print(f"{Fore.BLUE}{keys} {Fore.GREEN}{str(values)}")
 
 
-@register("set", "Used to set payload options", "Usage: set optionname value")
-def command_set(shell, user_input):
-    shell.payload_options[user_input[1]][0] = user_input[2]
+@register("set", "Used to set payload options.", "Usage: set optionname value")
+def command_set(shell, user_in):
+    if len(user_in) > 2:
+        shell.payload_options[user_in[1]][0] = user_in[2]
+    else:
+        print(f"{Fore.YELLOW}Incorrect usage. refeer to the help command.")
 
 
-@register("shoot", "Used to launch the payload", "Usage: shoot")
+@register("shoot", "Used to launch the payload.", "Usage: shoot")
 def command_shoot(shell, user_in):
     arguments = []
     for keys, values in shell.payload_options.items():
@@ -74,3 +77,10 @@ def command_help(shell, user_in):
     if len(user_in) > 1:
         print(
             f"{Fore.BLUE}{commands[user_in[1]].helpmsg} {Fore.GREEN}[{commands[user_in[1]].usage}]")
+
+
+@register("commands", "Shows all shell commands.", "Usage: commands")
+def command_commands(shell, user_in):
+    for key, values in commands.items():
+        print(
+            f"{Fore.BLUE}Command: ({key}) {Fore.GREEN}{commands[key].helpmsg}")
