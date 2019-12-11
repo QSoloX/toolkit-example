@@ -61,7 +61,8 @@ def command_shoot(shell, user_in):
 def command_payloads(shell, user_in):
     payload_list = os.listdir("payloads")
     payload_list.remove("__init__.py")
-    payload_list.remove("__pycache__")
+    if "__pycache__" in payload_list:
+        payload_list.remove("__pycache__")
     payload_list.remove("word_lists")
     for i in payload_list:
         test = i.replace(".py", "")
