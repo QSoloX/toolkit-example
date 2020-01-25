@@ -9,14 +9,29 @@ def command_exit(shell, input):
     shell.shell_running = False
 
 
+# @register("load", "Used to load payload.", "Usage: load payloadname")
+# def command_load(shell, user_input):
+#     if user_input[1] + ".py" in os.listdir("payloads"):
+#         shell.current_payload = user_input[1]
+#         module = __import__(f"payloads.{user_input[1]}")
+#         options = getattr(module, user_input[1]+"_options")
+#         payload = getattr(module, user_input[1])
+#         shell.payload_options = options
+#         shell.payload = payload
+#         print(f"{Fore.BLUE}Payload: [{user_input[1]}] loaded.")
+#     else:
+#         print(f"{user_input[1]} not a valid payload.")
+
 @register("load", "Used to load payload.", "Usage: load payloadname")
 def command_load(shell, user_input):
-    if user_input[1] + ".py" in os.listdir("payloads"):
+    if user_input[1] in os.listdir("payloads"):
         shell.current_payload = user_input[1]
-        module = __import__(f"payloads.{user_input[1]}")
-        options = getattr(module, user_input[1]+"_options")
-        payload = getattr(module, user_input[1])
-        shell.payload_options = options
+        module = __import__(f"payloads.{user_input[1]}.payload")
+        payload = getattr(module, "main")
+        with open('payloads/'+user_input[1]+"/options.json", "r") as f:
+            options = json.load(f)
+        print(options["Params"][0])
+        shell.payload_options = options["Params"][0]
         shell.payload = payload
         print(f"{Fore.BLUE}Payload: [{user_input[1]}] loaded.")
     else:
