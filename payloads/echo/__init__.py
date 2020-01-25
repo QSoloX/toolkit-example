@@ -1,1 +1,0 @@
-from .payload import main
