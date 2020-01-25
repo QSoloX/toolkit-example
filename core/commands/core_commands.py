@@ -1,5 +1,6 @@
 from core.command_core import commands, register
 import os
+import json
 from colorama import Fore
 
 
@@ -57,6 +58,21 @@ def command_shoot(shell, user_in):
     shell.payload(arguments)
 
 
+# @register("payloads", "shows all of the payloads currently in the payloads directory.", "Usage: payloads")
+# def command_payloads(shell, user_in):
+#     payload_list = os.listdir("payloads")
+#     payload_list.remove("__init__.py")
+#     if "__pycache__" in payload_list:
+#         payload_list.remove("__pycache__")
+#     payload_list.remove("word_lists")
+#     for i in payload_list:
+#         test = i.replace(".py", "")
+#         module = __import__(f"payloads.{test}")
+#         help_text = getattr(module, test+"_help_text")
+
+#         print(
+#             f"{Fore.BLUE}Payload: [{test}] {Fore.GREEN}Information: {help_text}")
+
 @register("payloads", "shows all of the payloads currently in the payloads directory.", "Usage: payloads")
 def command_payloads(shell, user_in):
     payload_list = os.listdir("payloads")
@@ -65,12 +81,13 @@ def command_payloads(shell, user_in):
         payload_list.remove("__pycache__")
     payload_list.remove("word_lists")
     for i in payload_list:
-        test = i.replace(".py", "")
-        module = __import__(f"payloads.{test}")
-        help_text = getattr(module, test+"_help_text")
-
+        current_payload = os.listdir("payloads/"+i)
+        with open('payloads/'+i+"/options.json", "r") as f:
+            data = json.load(f)
+        payload_name = data["Name"]
+        help_text = data["HelpText"]
         print(
-            f"{Fore.BLUE}Payload: [{test}] {Fore.GREEN}Information: {help_text}")
+            f"{Fore.BLUE}Payload: [{payload_name}] {Fore.GREEN}Information: {help_text}")
 
 
 @register("help", "help command.", "Usage: help commandname")

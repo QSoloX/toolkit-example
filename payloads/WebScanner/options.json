@@ -1,0 +1,10 @@
+{
+  "Name": "Test Payload",
+  "Type": "Scanner",
+  "HelpText": "this is a test payload.",
+  "Creator": "deez nutz",
+  "Params": [
+    { "type": "Required", "Url": "www.example.com" },
+    { "type": "Required", "Url": "www.example.com" }
+  ]
+}
