@@ -1,5 +1,8 @@
 from core.command_core import commands, register
 import os
+import sys
+import importlib.util
+import json
 from colorama import Fore
 
 
@@ -10,12 +13,19 @@ def command_exit(shell, input):
 
 @register("load", "Used to load payload.", "Usage: load payloadname")
 def command_load(shell, user_input):
-    if user_input[1] + ".py" in os.listdir("payloads"):
+    if user_input[1] in os.listdir("payloads"):
         shell.current_payload = user_input[1]
-        module = __import__(f"payloads.{user_input[1]}")
-        options = getattr(module, user_input[1]+"_options")
-        payload = getattr(module, user_input[1])
-        shell.payload_options = options
+        spec = importlib.util.spec_from_file_location(
+            f"{user_input[1]}", f"payloads/{user_input[1]}/payload.py")
+        module = importlib.util.module_from_spec(spec)
+        print(module)
+        sys.modules[spec.name] = module
+        spec.loader.exec_module(module)
+        payload = getattr(module, "main")
+        with open('payloads/'+user_input[1]+"/options.json", "r") as f:
+            options = json.load(f)
+        shell.payload_options = options["Params"][0]
+        shell.payload_type = options["Type"]
         shell.payload = payload
         print(f"{Fore.BLUE}Payload: [{user_input[1]}] loaded.")
     else:
@@ -54,23 +64,25 @@ def command_shoot(shell, user_in):
             arguments.append(values)
     if len(arguments) == 1:
         arguments = arguments[0]
-    shell.payload(arguments)
+    results = shell.payload(arguments)
+    if results:
+        shell.results = results
 
 
 @register("payloads", "shows all of the payloads currently in the payloads directory.", "Usage: payloads")
 def command_payloads(shell, user_in):
     payload_list = os.listdir("payloads")
-    payload_list.remove("__init__.py")
     if "__pycache__" in payload_list:
         payload_list.remove("__pycache__")
     payload_list.remove("word_lists")
     for i in payload_list:
-        test = i.replace(".py", "")
-        module = __import__(f"payloads.{test}")
-        help_text = getattr(module, test+"_help_text")
-
+        current_payload = os.listdir("payloads/"+i)
+        with open('payloads/'+i+"/options.json", "r") as f:
+            data = json.load(f)
+        payload_name = data["Name"]
+        help_text = data["HelpText"]
         print(
-            f"{Fore.BLUE}Payload: [{test}] {Fore.GREEN}Information: {help_text}")
+            f"{Fore.BLUE}Payload: [{payload_name}] {Fore.GREEN}Information: {help_text}")
 
 
 @register("help", "help command.", "Usage: help commandname")
@@ -92,8 +104,7 @@ def command_commands(shell, user_in):
 def command_write(shell, user_in):
     if len(user_in) > 1:
         os.makedirs(os.path.dirname("output/"), exist_ok=True)
-        module = __import__(f"payloads.{shell.current_payload}")
-        results = getattr(module, shell.current_payload+"_results")
+        results = shell.results
         with open("output/"+user_in[1]+".txt", 'w+', encoding="utf-8") as f:
             for i in results:
                 f.write(str(i) + "\n")

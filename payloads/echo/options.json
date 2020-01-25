@@ -1,0 +1,7 @@
+{
+  "Name": "Echo",
+  "Type": "Test",
+  "HelpText": "This is a test payload that echos text.",
+  "Creator": "QSoloX",
+  "Params": [{ "text": ["Test", "Required"] }]
+}
