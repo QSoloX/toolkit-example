@@ -1,5 +1,5 @@
 {
-  "Name": "Link-Finder",
+  "Name": "Link_Finder",
   "Type": "Scanner",
   "HelpText": "Basic web directory scanner, utilizing Web Scraping.",
   "Creator": "QSoloX",

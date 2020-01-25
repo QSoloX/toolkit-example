@@ -1,5 +1,7 @@
 from core.command_core import commands, register
 import os
+import sys
+import importlib.util
 import json
 from colorama import Fore
 
@@ -13,7 +15,12 @@ def command_exit(shell, input):
 def command_load(shell, user_input):
     if user_input[1] in os.listdir("payloads"):
         shell.current_payload = user_input[1]
-        module = __import__(f"payloads.{user_input[1]}.payload")
+        spec = importlib.util.spec_from_file_location(
+            f"{user_input[1]}", f"payloads/{user_input[1]}/payload.py")
+        module = importlib.util.module_from_spec(spec)
+        print(module)
+        sys.modules[spec.name] = module
+        spec.loader.exec_module(module)
         payload = getattr(module, "main")
         with open('payloads/'+user_input[1]+"/options.json", "r") as f:
             options = json.load(f)
@@ -65,7 +72,6 @@ def command_shoot(shell, user_in):
 @register("payloads", "shows all of the payloads currently in the payloads directory.", "Usage: payloads")
 def command_payloads(shell, user_in):
     payload_list = os.listdir("payloads")
-    payload_list.remove("__init__.py")
     if "__pycache__" in payload_list:
         payload_list.remove("__pycache__")
     payload_list.remove("word_lists")

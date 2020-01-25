@@ -3,8 +3,6 @@ import requests
 from bs4 import BeautifulSoup
 from colorama import Fore
 
-scrape_crawler_results = []
-
 
 # Define custom payload
 
@@ -13,7 +11,7 @@ def main(arguments):
     url = arguments
     # Define Variables
     run = True
-
+    scrape_crawler_results = []
     urls_to_scrape = []
     # Make first request
     r = requests.get(url)
@@ -43,7 +41,9 @@ def main(arguments):
                 urls_to_scrape.remove(urls_to_scrape[0])
             else:
                 print(urls_to_scrape)
+                return scrape_crawler_results
                 run = False
 
     except KeyboardInterrupt:
+        return scrape_crawler_results
         run = False
