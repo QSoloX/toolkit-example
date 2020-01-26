@@ -111,3 +111,8 @@ def command_write(shell, user_in):
         print(f"{Fore.BLUE} Urls Written too {Fore.GREEN} output/{user_in[1]}")
     else:
         print(f"{Fore.YELLOW}Incorrect Usage, please refeer to the help command.")
+
+
+@register("update", "Updates the to the newest version of aawt using git.", "Usage: update")
+def command_update(shell, user_in):
+    os.system("git pull origin master")
